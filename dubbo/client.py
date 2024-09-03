@@ -40,10 +40,10 @@ class DubboClient(object):
     用于实现dubbo调用的客户端
     """
 
-    def __init__(self, interface, version='1.0.0', dubbo_version='2.4.10', zk_register=None, host=None):
+    def __init__(self, interface, version='', dubbo_version='2.4.10', zk_register=None, host=None):
         """
         :param interface: 接口名，例如：com.qianmi.pc.es.api.EsProductQueryProvider
-        :param version: 接口的版本号，例如：1.0.0，默认为1.0.0
+        :param version: 接口的版本号，默认:""
         :param dubbo_version: dubbo的版本号，默认为2.4.10
         :param zk_register: zookeeper注册中心管理端，参见类：ZkRegister
         :param host: 远程主机地址，用于绕过zookeeper进行直连，例如：172.21.4.98:20882
@@ -269,10 +269,10 @@ class ZkRegister(object):
             'interface': provider_fields['interface'],
             'methods': provider_fields['methods'],
             'pid': get_pid(),
-            'revision': provider_fields['revision'],
+            'revision': provider_fields.get('revision'),
             'side': 'consumer',
             'timestamp': int(time.time() * 1000),
-            'version': provider_fields['version'],
+            'version': provider_fields.get('version'),
         }
 
         params = []
